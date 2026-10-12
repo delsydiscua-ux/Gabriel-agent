@@ -1,0 +1,537 @@
+<title>Ultramar Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout v1 from Figma: two columns on desktop (brief data left, orders + Primarch stage right), meetings below the fold, single column on phones. */
+:root{
+  --void:#070B16;
+  --navy:#0B1A3F;
+  --ultra:#0B2A6F;
+  --cobalt:#3F73DB;
+  --gold:#C9A227;
+  --gold-hi:#F2D675;
+  --parch:#E8E1CC;
+  --parch-dim:#A8A590;
+  --crimson:#E0574F;
+  --line:rgba(201,162,39,.45);
+  --panel:rgba(7,11,22,.82);
+  --display:"Cinzel","Trajan Pro",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  background:var(--void);color:var(--parch);font-family:var(--mono);font-size:15px;line-height:1.5;
+  padding-inline:16px;padding-block:20px 48px;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;
+  background:
+    linear-gradient(180deg,rgba(7,11,22,.35) 0%,rgba(11,26,63,.55) 55%,rgba(11,26,63,.85) 100%),
+    url("bg-desktop.png") center/cover no-repeat;
+}
+@media (max-width:700px){
+  body::before{background:
+    linear-gradient(180deg,rgba(7,11,22,.35) 0%,rgba(11,26,63,.55) 55%,rgba(11,26,63,.85) 100%),
+    url("bg-mobile.png") center/cover no-repeat}
+}
+.wrap{position:relative;z-index:1;max-width:1760px;margin-inline:auto}
+h1,h2,h3{font-family:var(--display);font-weight:700;margin:0;letter-spacing:.06em;text-wrap:balance}
+h2.t{font-size:1.05rem;color:var(--gold-hi);text-transform:uppercase;letter-spacing:.14em}
+button{
+  font:inherit;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  background:transparent;color:var(--gold-hi);border:1px solid var(--gold);border-radius:0;padding:8px 13px}
+button:hover{background:rgba(201,162,39,.16)}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+button[disabled]{opacity:.5;cursor:default}
+select,input[type=text]{background:rgba(7,11,22,.9);color:var(--parch);border:1px solid var(--line);border-radius:0;font:inherit;font-size:.82rem;padding:7px 9px;min-width:0;max-width:100%}
+a{color:var(--cobalt)}
+.panel{border:1px solid var(--line);background:var(--panel);padding:20px 24px;position:relative;min-width:0}
+.panel::before,.panel::after{content:"";position:absolute;width:12px;height:12px;border:2px solid var(--gold)}
+.panel::before{top:-2px;left:-2px;border-right:0;border-bottom:0}
+.panel::after{bottom:-2px;right:-2px;border-left:0;border-top:0}
+.note{color:var(--parch-dim);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase}
+.quiet{color:var(--parch-dim);font-size:.88rem;margin:10px 0 0}
+
+/* ---- grid ---- */
+.grid{display:grid;gap:24px;grid-template-columns:minmax(0,1fr);
+  grid-template-areas:"head" "orders" "stage" "prio" "sit" "meet" "clients"}
+@media (min-width:1100px){
+  .grid{grid-template-columns:minmax(0,23fr) minmax(0,20fr);column-gap:40px;
+    grid-template-areas:"head orders" "sit stage" "prio stage" "clients stage" "meet meet"}
+}
+.head{grid-area:head}.orders{grid-area:orders}.stage{grid-area:stage}.prio{grid-area:prio}
+.sit{grid-area:sit}.meet{grid-area:meet}.clients{grid-area:clients}
+
+/* header */
+.head{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:16px 20px}
+.mark{width:56px;height:56px;border:2px solid var(--gold);background:var(--ultra);display:grid;place-items:center;
+  font-family:var(--display);font-weight:700;font-size:1.7rem;color:var(--gold-hi);flex:none}
+.head .ttl{flex:1 1 220px;min-width:0}
+.head h1{font-size:clamp(1.5rem,3.4vw,2.6rem);color:var(--gold-hi);text-transform:uppercase;line-height:1.1}
+.head .when{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:.88rem;min-width:0}
+.head .when .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:700px){.head .when{align-items:flex-start;width:100%}.head .when .row{justify-content:flex-start}}
+
+/* orders */
+.orders{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.orders .txt{flex:1 1 320px;min-width:0}
+.orders p{font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,2.6vw,2.2rem);line-height:1.2;margin:8px 0 6px;color:var(--parch);text-wrap:balance}
+.hear{display:flex;flex-direction:column;gap:8px;align-items:stretch;flex:0 0 auto}
+.hear .go{background:rgba(11,42,111,.6);padding:14px 20px;text-align:center}
+.hear .go b{display:block;font-family:var(--display);font-size:1rem;letter-spacing:.14em}
+.hear .go span{display:block;font-size:.68rem;color:var(--parch-dim);margin-top:4px}
+.hear .alt{font-size:.7rem;padding:6px 10px;color:var(--parch-dim);border-color:var(--line)}
+.speaking{display:none;width:9px;height:9px;border-radius:50%;background:var(--crimson);margin:0 auto}
+.speaking.on{display:block;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.speaking.on{animation:none}}
+@media (max-width:700px){.hear{width:100%}}
+
+/* summary */
+.sit .summary{margin:12px 0 0;max-width:75ch}
+
+/* priorities */
+.prio ol{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.prio li{display:grid;grid-template-columns:2ch auto minmax(0,1fr);gap:12px;align-items:start}
+.prio .num{font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--parch-dim);line-height:1.3}
+.prio li.top .num{color:var(--gold)}
+.prio .txt{overflow-wrap:anywhere}
+.prio .who{color:var(--cobalt);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;margin-right:8px}
+.prio .sub{display:block;color:var(--parch-dim);font-size:.8rem;margin-top:2px}
+.prio .more{margin-top:14px;font-size:.72rem}
+@media (max-width:560px){.prio li{grid-template-columns:2ch minmax(0,1fr)}.prio li .pill{grid-column:2;justify-self:start}.prio li .txt{grid-column:2}}
+.pill{display:inline-block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--line);white-space:nowrap}
+.pill.blocked{color:var(--crimson);border-color:var(--crimson)}
+.pill.progress{color:var(--cobalt);border-color:var(--cobalt)}
+.pill.stale{color:var(--parch-dim);border-style:dashed}
+.pill.new,.pill.priority{color:var(--gold-hi);border-color:var(--gold)}
+
+/* clients */
+.clients{display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));padding:0;border:0;background:none}
+.clients::before,.clients::after{display:none}
+.client h3{font-size:1rem;color:var(--gold-hi);text-transform:uppercase;letter-spacing:.12em}
+.client .cnt{margin-top:6px}
+.client ul{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.client li{font-size:.86rem;display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+
+/* stage (Primarch + mission log) */
+.stage{display:grid;gap:24px;grid-template-columns:minmax(0,1fr);align-content:start}
+@media (min-width:700px){.stage{grid-template-columns:minmax(0,300px) minmax(0,1fr)}}
+.stage .fig{order:-1}
+@media (min-width:700px){.stage .fig{order:0;grid-column:2;grid-row:1}.stage .log{grid-column:1;grid-row:1}}
+.fig{margin:0;border:1px solid var(--gold);background:var(--navy);position:relative;overflow:hidden;align-self:start}
+.fig img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center top}
+.fig figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 10px;background:linear-gradient(0deg,rgba(7,11,22,.9),transparent);
+  font-family:var(--display);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-hi)}
+.log form{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.log input[type=text]{flex:1 1 140px}
+.log ul{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.log li{display:flex;gap:10px;align-items:flex-start;font-size:.88rem}
+.log li.done span{text-decoration:line-through;color:var(--parch-dim)}
+.log li span{flex:1;min-width:0;overflow-wrap:anywhere}
+.log li button{padding:2px 8px;font-size:.68rem}
+.log input[type=checkbox]{margin-top:4px;accent-color:var(--gold)}
+
+/* meetings */
+.cal{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.cal .pill{color:var(--cobalt);border-color:var(--cobalt)}
+.cal .pill.g{color:var(--gold-hi);border-color:var(--gold)}
+
+.status{font-size:.86rem;color:var(--parch-dim);margin:0 0 16px}
+.status.err{color:var(--crimson)}
+.hint{text-align:center;margin-top:18px}
+.foot{margin-top:28px;color:var(--parch-dim);font-size:.74rem;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.voice{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+</style>
+
+<div class="wrap">
+  <div class="status" id="status" role="status">Reading the latest brief from Notion.</div>
+
+  <div class="grid">
+    <header class="head panel">
+      <div class="mark" aria-hidden="true">U</div>
+      <div class="ttl">
+        <h1>Battle Brief</h1>
+      </div>
+      <div class="when">
+        <span id="today">Loading date</span>
+        <div class="row">
+          <label class="note" for="source">Brief</label>
+          <select id="source" disabled><option>Linking to the Work Hub</option></select>
+          <button id="refresh" type="button">Refresh</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="orders panel" aria-labelledby="orders-h">
+      <div class="txt">
+        <h2 class="t" id="orders-h">Today's Orders</h2>
+        <p id="opening"></p>
+        <span class="note" id="open-meta"></span>
+      </div>
+      <div class="hear">
+        <button class="go" id="speak" type="button"><b>Hear</b><span>the Primarch</span></button>
+        <span class="speaking" id="speaking" aria-hidden="true"></span>
+        <button class="alt" id="another-open" type="button">Another order</button>
+      </div>
+    </section>
+
+    <section class="sit panel" aria-labelledby="sit-h">
+      <h2 class="t" id="sit-h">Current Situation</h2>
+      <p class="summary" id="summary">Waiting for the brief.</p>
+      <p class="note" id="summary-src" style="margin-top:12px"></p>
+    </section>
+
+    <section class="prio panel" aria-labelledby="prio-h">
+      <h2 class="t" id="prio-h">Priorities from Pending</h2>
+      <p class="note" id="prio-sub" style="margin-top:6px"></p>
+      <ol id="prio-list"></ol>
+      <button class="more" id="prio-more" type="button" hidden>Show more</button>
+    </section>
+
+    <section class="clients" id="clients" aria-label="Clients"></section>
+
+    <section class="stage" aria-label="Primarch and mission log">
+      <figure class="fig">
+        <img src="primarch.jpg" alt="Roboute Guilliman, Primarch of the Ultramarines, pointing forward" width="720" height="900">
+        <figcaption>Roboute Guilliman</figcaption>
+      </figure>
+      <section class="log panel" aria-labelledby="log-h">
+        <h2 class="t" id="log-h">Mission Log</h2>
+        <p class="note" style="margin-top:6px">Your orders. Kept on this device.</p>
+        <form id="log-form">
+          <label class="note" for="log-text" style="align-self:center;flex-basis:100%">New order</label>
+          <input id="log-text" type="text" maxlength="140" placeholder="Prepare client handoff notes">
+          <button type="submit">Add</button>
+        </form>
+        <ul id="log-list"></ul>
+      </section>
+    </section>
+
+    <section class="meet panel" aria-labelledby="meet-h">
+      <h2 class="t" id="meet-h">Today's Meetings</h2>
+      <p class="quiet" id="meet-msg">Calendars are not connected yet. Today's meetings will list here with time, client and calendar once Outlook (2 accounts) and Google Calendar are linked.</p>
+      <div class="cal" aria-label="Calendars to connect">
+        <span class="pill">Outlook · Client A</span>
+        <span class="pill">Outlook · Client B</span>
+        <span class="pill g">Google</span>
+      </div>
+    </section>
+  </div>
+
+  <p class="note hint" id="scroll-hint">Scroll for today's meetings</p>
+
+  <footer class="foot">
+    <span id="src-line"></span>
+    <div class="voice">
+      <label class="note" for="voice">Voice</label>
+      <select id="voice"></select>
+      <label class="note" for="rate">Pace</label>
+      <input id="rate" type="range" min="0.7" max="1.1" step="0.05" value="0.88">
+    </div>
+    <span>Read-only from Notion. Nothing here creates or edits tasks.</span>
+  </footer>
+</div>
+
+<script>
+const PHRASES = [{"kind": "opening", "theme": "morning", "text": "Begin the day's campaign."}, {"kind": "opening", "theme": "morning", "text": "Dawn breaks. The march continues."}, {"kind": "opening", "theme": "morning", "text": "Initialize daily protocols. Stand ready."}, {"kind": "opening", "theme": "morning", "text": "A new day, a new theater of operations."}, {"kind": "opening", "theme": "morning", "text": "Armor sealed, mind focused. Begin."}, {"kind": "opening", "theme": "morning", "text": "The sun rises on new objectives. Onward."}, {"kind": "opening", "theme": "morning", "text": "Duty calls before the shadows fade."}, {"kind": "opening", "theme": "morning", "text": "Assess priorities, establish the line, advance."}, {"kind": "opening", "theme": "morning", "text": "Morning brings no reprieve, only new ground to hold."}, {"kind": "opening", "theme": "morning", "text": "Stand tall, brother. The day demands our best."}, {"kind": "opening", "theme": "morning", "text": "Clear the fog, secure the perimeter. Good morning."}, {"kind": "opening", "theme": "morning", "text": "To wake is to serve. Begin execution."}, {"kind": "opening", "theme": "morning", "text": "The campaign resumes with first light."}, {"kind": "opening", "theme": "morning", "text": "No hesitation at dawn; victory favors the early strike."}, {"kind": "opening", "theme": "morning", "text": "New directives logged. Step into the breach."}, {"kind": "opening", "theme": "afternoon", "text": "The afternoon is a siege; endurance is our shield."}, {"kind": "opening", "theme": "afternoon", "text": "Fatigue is merely data. Dismiss it and push forward."}, {"kind": "opening", "theme": "afternoon", "text": "When momentum slows, discipline drives the spear."}, {"kind": "opening", "theme": "afternoon", "text": "The sun tilts, but the line holds."}, {"kind": "opening", "theme": "afternoon", "text": "Midday attrition is expected. Maintain the pace."}, {"kind": "opening", "theme": "afternoon", "text": "Ceramite does not tire, and neither shall we."}, {"kind": "opening", "theme": "afternoon", "text": "The heaviest hour yields to relentless effort."}, {"kind": "opening", "theme": "afternoon", "text": "Realign sights, steady the breathing, finish the assault."}, {"kind": "opening", "theme": "afternoon", "text": "Pain passes; completed objectives remain."}, {"kind": "opening", "theme": "afternoon", "text": "The day grows long, but our resolve remains unyielding."}, {"kind": "opening", "theme": "afternoon", "text": "Do not count the remaining hours; count the fallen obstacles."}, {"kind": "opening", "theme": "afternoon", "text": "Stand firm through the afternoon heat."}, {"kind": "opening", "theme": "afternoon", "text": "A weary warrior still strikes true. Press on."}, {"kind": "opening", "theme": "afternoon", "text": "When energy wanes, duty dictates the next step."}, {"kind": "opening", "theme": "afternoon", "text": "Hold the line until the sun sets."}, {"kind": "opening", "theme": "meetings", "text": "Entering the war room. Strategy precedes victory."}, {"kind": "opening", "theme": "meetings", "text": "A day of councils; may our tactics remain sharp."}, {"kind": "opening", "theme": "meetings", "text": "Fulfill the briefing, execute the plan."}, {"kind": "opening", "theme": "meetings", "text": "Deliberation without action is stagnation. Keep it brief."}, {"kind": "opening", "theme": "meetings", "text": "Surrounded by reports, anchored by doctrine."}, {"kind": "opening", "theme": "meetings", "text": "A dozen briefings ahead—maintain tactical focus."}, {"kind": "opening", "theme": "meetings", "text": "Listen to the intel, refine the strategy, lead the response."}, {"kind": "opening", "theme": "meetings", "text": "Conclaves test patience as battle tests courage."}, {"kind": "opening", "theme": "meetings", "text": "Cut through the noise; extract the essential data."}, {"kind": "opening", "theme": "meetings", "text": "Many voices in the chamber, one objective in mind."}, {"kind": "opening", "theme": "meetings", "text": "From the council table to the front line—stay vigilant."}, {"kind": "opening", "theme": "meetings", "text": "Endure the debate; win the outcome."}, {"kind": "opening", "theme": "meetings", "text": "Another briefing chamber unlocked. Maintain composure."}, {"kind": "opening", "theme": "meetings", "text": "Logistics and strategy before the charge."}, {"kind": "opening", "theme": "meetings", "text": "The council convenes. Let reason prevail."}, {"kind": "status", "theme": "status", "text": "Status: Active on the frontline."}, {"kind": "status", "theme": "status", "text": "In council. Responses delayed."}, {"kind": "status", "theme": "status", "text": "Engaged in heavy logistics."}, {"kind": "status", "theme": "status", "text": "Objectives secured for today."}, {"kind": "status", "theme": "status", "text": "Campaign paused for refuel. Resuming shortly."}, {"kind": "closing", "theme": "statecraft", "text": "A victory won without securing the supply lines is not a triumph; it is merely a defeat deferred to the next campaign."}, {"kind": "closing", "theme": "statecraft", "text": "The Imperium will not survive by worshipping the ashes of its past, but by the discipline of those willing to rebuild it stone by stone in the present."}, {"kind": "closing", "theme": "statecraft", "text": "The Codex Astartes is not a dungeon of dogma; it is a map of possibilities. He who cannot adapt doctrine to the field has lost before drawing his blade."}, {"kind": "closing", "theme": "statecraft", "text": "We do not stand above humanity to rule it from the shadows, but to serve as the shield against its extinction. Power is not a right; it is eternal servitude."}, {"kind": "closing", "theme": "statecraft", "text": "Faith may kindle the fire in a soldier's breast, but it is ammunition, steel, and logistics that truly break the enemy line."}, {"kind": "closing", "theme": "statecraft", "text": "To endure pain is the virtue of a warrior; to heal the wounds of the Imperium is the duty of a statesman."}, {"kind": "closing", "theme": "statecraft", "text": "An empire built on fear and ignorance is a fortress built on sand. Sooner or later, the tide of reality will sweep it away."}, {"kind": "closing", "theme": "statecraft", "text": "Do not bring me martyrs. Bring me officers who know how to hold a trench and keep their men alive."}, {"kind": "closing", "theme": "statecraft", "text": "We fought a Great Crusade to liberate mankind, not to become the jailers of its soul."}, {"kind": "closing", "theme": "statecraft", "text": "Courage without foresight is merely glorious suicide."}, {"kind": "closing", "theme": "statecraft", "text": "A hundred worlds saved on paper mean nothing if the harvest fails and the people starve before winter."}, {"kind": "closing", "theme": "statecraft", "text": "I do not demand blind obedience. I demand competence, efficiency, and the resolve to see the work done."}, {"kind": "closing", "theme": "statecraft", "text": "In the darkest hour, reason is not a weakness—it is the only lantern that does not flicker."}, {"kind": "closing", "theme": "statecraft", "text": "We are built to conquer, yet we are judged by what we build after the ashes cool."}, {"kind": "closing", "theme": "statecraft", "text": "To fear the truth is to surrender to the enemy before the battle begins."}, {"kind": "closing", "theme": "tactics", "text": "Theoretical: The enemy holds superior numbers and elevated terrain.\nPractical: Uncoordinated mass collapses under concentrated pressure. Hold the center, flank the wedge, execute without hesitation."}, {"kind": "closing", "theme": "tactics", "text": "Theoretical: The daemon feeds on fear and despair.\nPractical: Fear requires a beating heart. Fire in controlled volleys until nothing remains to despair."}, {"kind": "closing", "theme": "tactics", "text": "Theoretical: The siege will breach our primary gate within three hours.\nPractical: Three hours is sufficient time to turn the courtyard into a killzone."}, {"kind": "closing", "theme": "tactics", "text": "Theoretical: Fortification reduces mobility in fluid combat.\nPractical: An unyielding stronghold forces the enemy to move where we command them."}, {"kind": "closing", "theme": "tactics", "text": "Theoretical: Ammunition reserves are reduced to twenty percent.\nPractical: Transition to close-quarters engagement; conserve bolter fire for armored targets."}, {"kind": "closing", "theme": "tactics", "text": "Theoretical: The xenos organism adapts rapidly to energy weapons.\nPractical: Rotate ordnance cycles and engage with high-velocity kinetic impact."}, {"kind": "closing", "theme": "tactics", "text": "Theoretical: Retreat allows the enemy to consolidate their position.\nPractical: Tactical repositioning draws their spearhead into crossfire."}, {"kind": "closing", "theme": "tactics", "text": "Theoretical: The enemy commander seeks a duel of honour.\nPractical: Suppress his bodyguard and neutralize him with heavy artillery."}, {"kind": "closing", "theme": "tactics", "text": "Theoretical: Communication lines are severed across the sector.\nPractical: Sub-unit commanders operate under standing directive: advance and secure."}, {"kind": "closing", "theme": "tactics", "text": "Theoretical: Total victory is statistically improbable.\nPractical: Improbable is not impossible. Maintain firing lines."}, {"kind": "closing", "theme": "honor", "text": "Macragge did not stand because its defenders were fearless; it stood because no brother allowed his hesitation to break the line."}, {"kind": "closing", "theme": "honor", "text": "Valor without order is mere frenzy. We strive for perfection so the Emperor's war machine operates without flaw."}, {"kind": "closing", "theme": "honor", "text": "To demand victory is easy; to maintain operational rigor in the darkest hour is what separates a warrior of Ultramar from an armed man."}, {"kind": "closing", "theme": "honor", "text": "We wear the cobalt not for vanity, but so the enemies of mankind know exactly who has come to end them."}, {"kind": "closing", "theme": "honor", "text": "An oath sworn on Macragge is bound not by words, but by the blood in our veins."}, {"kind": "closing", "theme": "honor", "text": "The shield protects the warrior, but brotherhood protects the Chapter."}, {"kind": "closing", "theme": "honor", "text": "We are the anvil upon which the enemies of the Imperium are broken."}, {"kind": "closing", "theme": "honor", "text": "Pride is earned in the armory and proven on the battlefield."}, {"kind": "closing", "theme": "honor", "text": "We do not march for glory. We march so that those behind us may live to see tomorrow."}, {"kind": "closing", "theme": "honor", "text": "An Ultramarine does not yield ground; he redefines the frontline."}, {"kind": "closing", "theme": "battle-cry", "text": "We bear the banner of Ultramar not to display nobility, but to remind the darkness what happens when light marches with military discipline!"}, {"kind": "closing", "theme": "battle-cry", "text": "Our armor holds because duty reinforces the ceramite. Hold your fire, lock targets. Today we do not die here; today we prove why we were created!"}, {"kind": "closing", "theme": "battle-cry", "text": "We are not driven by blind hatred, but by the absolute certainty of our purpose. They may break the flesh, but they will never break the order we represent."}, {"kind": "closing", "theme": "battle-cry", "text": "By the Emperor who guides the stars, by Guilliman who directs our blades—for Macragge!"}, {"kind": "closing", "theme": "battle-cry", "text": "Lock bolters! Target the command node! Let them learn the price of defying the Imperium!"}, {"kind": "closing", "theme": "battle-cry", "text": "Stand firm! A warrior of the Astartes dies only when his duty is fulfilled!"}, {"kind": "closing", "theme": "battle-cry", "text": "Let them come. Every step they take forward is a step closer to their execution."}, {"kind": "closing", "theme": "battle-cry", "text": "No retreat, no hesitation, no mercy. Purge the line!"}, {"kind": "closing", "theme": "battle-cry", "text": "Their rage is chaotic; our wrath is disciplined. Fire at will!"}, {"kind": "closing", "theme": "battle-cry", "text": "Cleanse the breach! Leave nothing standing that does not bow to the Throne!"}, {"kind": "closing", "theme": "battle-cry", "text": "They bring fury; we bring war."}, {"kind": "closing", "theme": "battle-cry", "text": "Hold the line until the last bolt is spent, then raise your chainswords!"}, {"kind": "closing", "theme": "battle-cry", "text": "In the face of darkness, our resolve is absolute. Advance!"}, {"kind": "closing", "theme": "battle-cry", "text": "Brothers, form the shield wall! Let the tide shatter against our ceramite!"}, {"kind": "closing", "theme": "battle-cry", "text": "For the Emperor, for the Primarch, for humanity—victory or oblivion!"}];
+const SERVER = "Notion";
+const PARENT_ID = "751b6a8cc9ac4c6caaaa3ee711a5703b";
+const CLIENT_ORDER = ["Audacy", "Medtronic", "HSD"];
+const VISIBLE_PRIORITIES = 6;
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+function el(tag, cls, text){ const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+/* ---------- phrases ---------- */
+const dayKey = new Date().toISOString().slice(0, 10);
+const dayNum = Math.floor(new Date(dayKey).getTime() / 86400000);
+let openOffset = 0, openTheme = "morning";
+function pickOpening(){
+  const pool = PHRASES.filter(p => p.kind === "opening" && p.theme === openTheme);
+  return pool[(dayNum + openOffset) % pool.length];
+}
+const THEME_LABEL = { morning: "Day start", afternoon: "Heavy afternoon", meetings: "Council day" };
+function renderPhrase(){
+  $("opening").textContent = pickOpening().text;
+  $("open-meta").textContent = THEME_LABEL[openTheme] || "";
+}
+$("today").textContent = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+openTheme = new Date().getHours() < 12 ? "morning" : "afternoon";
+renderPhrase();
+$("another-open").onclick = () => { openOffset++; stopSpeak(); renderPhrase(); };
+
+/* ---------- voice (speaks today's order) ---------- */
+const synth = window.speechSynthesis;
+let voices = [];
+function loadVoices(){
+  if (!synth) return;
+  voices = synth.getVoices().filter(v => /^en/i.test(v.lang));
+  const sel = $("voice"); const saved = store.get("voice", "");
+  sel.textContent = "";
+  voices.forEach(v => { const o = document.createElement("option"); o.value = v.name; o.textContent = v.name + " (" + v.lang + ")"; sel.appendChild(o); });
+  if (!voices.length) { const o = document.createElement("option"); o.textContent = "No English voice found"; sel.appendChild(o); sel.disabled = true; return; }
+  const pref = voices.find(v => v.name === saved) || voices.find(v => /david|daniel|guy|george|alex|male/i.test(v.name)) || voices[0];
+  sel.value = pref.name;
+}
+if (synth) { loadVoices(); synth.onvoiceschanged = loadVoices; }
+else { $("speak").disabled = true; $("speak").querySelector("b").textContent = "Voice unavailable"; }
+$("voice").onchange = e => store.set("voice", e.target.value);
+$("rate").value = store.get("rate", 0.88);
+$("rate").onchange = e => store.set("rate", Number(e.target.value));
+function stopSpeak(){ if (synth) synth.cancel(); $("speaking").classList.remove("on"); }
+$("speak").onclick = () => {
+  if (!synth) return;
+  if (synth.speaking) { stopSpeak(); return; }
+  const u = new SpeechSynthesisUtterance($("opening").textContent);
+  const v = voices.find(x => x.name === $("voice").value);
+  if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "en-US";
+  u.rate = Number($("rate").value); u.pitch = 0.65;
+  u.onstart = () => $("speaking").classList.add("on");
+  u.onend = u.onerror = () => $("speaking").classList.remove("on");
+  synth.cancel(); synth.speak(u);
+};
+
+/* ---------- mission log ---------- */
+let log = store.get("log", []);
+function renderLog(){
+  const ul = $("log-list"); ul.textContent = "";
+  if (!log.length) { ul.appendChild(el("li", "note", "No orders logged yet.")); return; }
+  log.forEach(it => {
+    const li = el("li", it.done ? "done" : "");
+    const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = it.done; cb.id = "log-" + it.id;
+    cb.setAttribute("aria-label", "Done: " + it.text);
+    cb.onchange = () => { it.done = cb.checked; store.set("log", log); renderLog(); };
+    const del = el("button", null, "Remove"); del.type = "button";
+    del.onclick = () => { log = log.filter(x => x.id !== it.id); store.set("log", log); renderLog(); };
+    li.append(cb, el("span", null, it.text), del); ul.appendChild(li);
+  });
+}
+$("log-form").onsubmit = e => {
+  e.preventDefault(); const t = $("log-text").value.trim(); if (!t) return;
+  log.unshift({ id: Date.now().toString(36), text: t, done: false });
+  store.set("log", log); $("log-text").value = ""; renderLog();
+};
+renderLog();
+
+/* ---------- brief parsing ---------- */
+const CITE = /\[\\?\[\d+\\?\]\]\([^)]*\)/g;
+function clean(s){
+  return String(s).replace(CITE, "").replace(/\[([^\]]+)\]\((?:https?:[^)]+)\)/g, "$1")
+    .replace(/\*\*|__/g, "").replace(/\\([\[\]!_*#])/g, "$1").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+}
+function textOf(res){
+  let p = res && res.payload;
+  if (typeof p === "string") { try { p = JSON.parse(p); } catch {} }
+  if (p && typeof p === "object" && typeof p.text === "string") return p.text;
+  if (typeof p === "string") return p;
+  const b = ((res && res.content) || []).find(x => x.type === "text");
+  if (b) { try { const j = JSON.parse(b.text); if (j && typeof j.text === "string") return j.text; } catch {} return b.text; }
+  return "";
+}
+function contentOf(t){ const m = t.match(/<content>([\s\S]*?)<\/content>/); return m ? m[1] : t; }
+function listBriefs(t){
+  const out = [], re = /<page url="([^"]+)">([^<]*)<\/page>/g; let m;
+  while ((m = re.exec(contentOf(t)))) {
+    const d = m[2].match(/(\d{4}-\d{2}-\d{2})/);
+    if (!/brief/i.test(m[2]) || !d) continue;
+    out.push({ url: m[1], title: clean(m[2]), date: d[1], test: /test/i.test(m[2]) });
+  }
+  out.sort((a, b) => b.date.localeCompare(a.date) || Number(a.test) - Number(b.test));
+  return out;
+}
+function statusOf(s){
+  if (/blocked/i.test(s)) return "Blocked";
+  if (/in progress/i.test(s)) return "In progress";
+  if (/carryover/i.test(s)) return "Carryover";
+  if (/stale/i.test(s)) return "Stale";
+  return "New";
+}
+function parsePending(raw, stale){
+  const t = clean(raw.replace(/^[-*]\s+/, ""));
+  let status = stale ? "Stale" : null, rest = t;
+  const m = t.match(/^\[(New|In progress|Blocked|Carryover)\]\s*(.*)$/i);
+  if (m) { status = m[1]; rest = m[2]; }
+  const prefixStale = /^Previous pending\s*—\s*stale:/i.test(rest) || /more than 14 days/i.test(rest);
+  rest = rest.replace(/^(Previous pending\s*—\s*stale:|New follow-ups from the window:)\s*/i, "");
+  const parts = rest.split(/\s+—\s+/);
+  const fields = {};
+  parts.forEach(p => { const f = p.match(/^(Owner|Due|Blocker):\s*(.*)$/i); if (f) fields[f[1].toLowerCase()] = f[2]; });
+  const task = parts[0];
+  if (!status) status = prefixStale ? "Stale" : statusOf(t);
+  const meta = [];
+  if (fields.owner && !/^n\/a$/i.test(fields.owner)) meta.push("Owner " + fields.owner);
+  if (fields.due && !/^n\/a$/i.test(fields.due)) meta.push("Due " + fields.due);
+  if (fields.blocker && !/^none$/i.test(fields.blocker)) meta.push("Blocker: " + fields.blocker);
+  return { status, task, meta: meta.join(" · ") };
+}
+function bullets(body){ return body.split("\n").filter(l => /^\s*[-*]\s+/.test(l)); }
+function parseBrief(md){
+  const out = { route: [], summary: "", clients: [], quality: "", routeLabel: "" };
+  const secs = md.split(/^## /m).slice(1);
+  for (const s of secs) {
+    const nl = s.indexOf("\n"); const head = clean(s.slice(0, nl)); const body = s.slice(nl + 1);
+    if (/^route for (tomorrow|today)/i.test(head)) {
+      out.routeLabel = head;
+      body.split("\n").forEach(l => {
+        const m = l.match(/^\s*\d+\.\s+(.*)$/); if (!m) return;
+        const t = clean(m[1]); const c = t.match(/^\[([^\]]+)\]\s*(.*)$/);
+        const parts = (c ? c[2] : t).split(/\s+—\s+/);
+        out.route.push({ client: c ? c[1] : "", action: parts[0], why: parts[1] || "", step: parts.slice(2).join(" — ").replace(/^first step:\s*/i, "") });
+      });
+    } else if (/^global summary/i.test(head)) out.summary = clean(body);
+    else if (/^quality/i.test(head)) out.quality = clean(body);
+    else {
+      const subs = body.split(/^### /m); const pre = subs.shift();
+      const c = { name: head.replace(/^🎙️|^🏥|^🚌/, "").trim(), pending: [], stale: [], advances: [], meetings: [], idle: false };
+      if (/no reliable .*activity/i.test(clean(pre)) && subs.length === 0) c.idle = true;
+      subs.forEach(sub => {
+        const n = sub.indexOf("\n"); const sh = clean(sub.slice(0, n)); const sb = sub.slice(n + 1);
+        const bl = bullets(sb);
+        if (/^pending/i.test(sh)) bl.forEach(b => { if (!/^[-*]\s+(No |\*\*No )/i.test(b.trim())) c.pending.push(parsePending(b, false)); });
+        else if (/^stale/i.test(sh)) bl.forEach(b => c.stale.push(parsePending(b, true)));
+        else if (/^advances/i.test(sh)) bl.forEach(b => { const t = clean(b.replace(/^\s*[-*]\s+/, "")); if (!/^No (reliable|new)/i.test(t)) c.advances.push(t); });
+        else if (/^meetings/i.test(sh)) bl.forEach(b => { const t = clean(b.replace(/^\s*[-*]\s+/, "")); if (!/^No meeting/i.test(t)) c.meetings.push(t); });
+      });
+      if (!c.pending.length && !c.stale.length && !c.advances.length && !c.meetings.length) c.idle = true;
+      out.clients.push(c);
+    }
+  }
+  return out;
+}
+
+/* ---------- render ---------- */
+function pillClass(s){ return s === "Blocked" ? "blocked" : s === "In progress" ? "progress" : s === "Stale" ? "stale" : s === "Priority" ? "priority" : "new"; }
+const RANK = { "Blocked": 0, "In progress": 1, "New": 2, "Carryover": 3, "Stale": 4 };
+const norm = s => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().slice(0, 48);
+let priorities = [], expanded = false;
+
+function buildPriorities(b){
+  const items = []; const seen = new Set();
+  b.route.forEach(r => { items.push({ who: r.client, text: r.action, status: "Priority", sub: r.step ? "First step: " + r.step : r.why }); seen.add(norm(r.action)); });
+  const pend = [];
+  b.clients.forEach(c => c.pending.concat(c.stale).forEach(p => pend.push({ who: c.name, p })));
+  pend.sort((a, c) => (RANK[a.p.status] ?? 5) - (RANK[c.p.status] ?? 5));
+  pend.forEach(x => {
+    const k = norm(x.p.task);
+    if (seen.has(k) || [...seen].some(s => s && (k.startsWith(s) || s.startsWith(k)))) return;
+    seen.add(k);
+    items.push({ who: x.who, text: x.p.task, status: x.p.status, sub: x.p.meta });
+  });
+  return items;
+}
+function renderPriorities(){
+  const ol = $("prio-list"); ol.textContent = "";
+  if (!priorities.length) { ol.appendChild(el("li", "quiet", "No open priorities found in this brief.")); $("prio-more").hidden = true; return; }
+  const shown = expanded ? priorities : priorities.slice(0, VISIBLE_PRIORITIES);
+  shown.forEach((it, i) => {
+    const li = el("li", i < 3 ? "top" : "");
+    li.appendChild(el("span", "num", String(i + 1)));
+    li.appendChild(el("span", "pill " + pillClass(it.status), it.status));
+    const t = el("span", "txt");
+    if (it.who) t.appendChild(el("span", "who", it.who));
+    t.appendChild(document.createTextNode(it.text));
+    if (it.sub) t.appendChild(el("span", "sub", it.sub));
+    li.appendChild(t); ol.appendChild(li);
+  });
+  const rest = priorities.length - VISIBLE_PRIORITIES;
+  const mb = $("prio-more");
+  mb.hidden = rest <= 0;
+  mb.textContent = expanded ? "Show fewer" : "Show " + rest + " more";
+}
+$("prio-more").onclick = () => { expanded = !expanded; renderPriorities(); };
+
+function renderClients(b){
+  const g = $("clients"); g.textContent = "";
+  const byName = new Map(b.clients.map(c => [c.name.toLowerCase(), c]));
+  const names = CLIENT_ORDER.concat(b.clients.map(c => c.name).filter(n => !CLIENT_ORDER.some(o => o.toLowerCase() === n.toLowerCase())).filter(n => !/internal/i.test(n)));
+  names.forEach(n => {
+    const c = byName.get(n.toLowerCase()) || { name: n, pending: [], stale: [], meetings: [], idle: true };
+    const p = el("section", "client panel");
+    p.appendChild(el("h3", null, c.name));
+    const blocked = c.pending.filter(x => x.status === "Blocked").length;
+    p.appendChild(el("div", "note cnt", c.idle ? "Quiet" : c.pending.length + " pending" + (blocked ? " · " + blocked + " blocked" : "") + (c.stale.length ? " · " + c.stale.length + " stale" : "")));
+    const all = c.pending.concat(c.stale);
+    if (c.idle || !all.length) p.appendChild(el("p", "quiet", "No reliable activity in the window."));
+    else {
+      const ul = el("ul");
+      all.slice(0, 3).forEach(it => {
+        const li = el("li");
+        li.appendChild(el("span", "pill " + pillClass(it.status), it.status));
+        li.appendChild(el("span", null, it.task));
+        ul.appendChild(li);
+      });
+      p.appendChild(ul);
+      if (all.length > 3) p.appendChild(el("p", "note", "+ " + (all.length - 3) + " more"));
+    }
+    g.appendChild(p);
+  });
+}
+function renderBrief(b){
+  $("summary").textContent = b.summary || "This brief has no summary section yet.";
+  $("summary-src").textContent = b.quality ? "Coverage: " + b.quality.slice(0, 160) + (b.quality.length > 160 ? "..." : "") : "";
+  priorities = buildPriorities(b); expanded = false;
+  $("prio-sub").textContent = b.route.length ? (b.routeLabel || "Route") + " first, then the rest of the pending items" : "No route section in this brief. Sorted by status.";
+  renderPriorities();
+  renderClients(b);
+  const hasMeetings = b.clients.some(c => c.meetings.length);
+  if (hasMeetings) { openTheme = "meetings"; renderPhrase(); }
+}
+
+/* ---------- loading ---------- */
+let mcp = null, briefs = [];
+function setStatus(msg, err){ const s = $("status"); s.textContent = msg; s.className = "status" + (err ? " err" : ""); s.hidden = !msg; }
+function explain(e){
+  const c = e && e.code;
+  if (c === "server_not_connected" || c === "selection_required") return "Notion is not connected for this account. Add it in claude.ai Settings, Connectors, then refresh.";
+  if (c === "needs_reauth") return "The Notion connection expired. Reconnect it in claude.ai Settings, Connectors, then refresh.";
+  if (c === "not_in_manifest" || c === "approval_required" || c === "consent_required") return "Notion access was not allowed for this page. Press Refresh and choose Allow.";
+  if (c === "server_unavailable") return "Notion did not answer. Press Refresh to try again.";
+  if (c === "tool_error") return "Notion refused the request: " + (e.message || "no details") + ". Check that this account can open the Brief Diario de Trabajo page.";
+  return "Could not load the brief (" + (c || "unknown") + ").";
+}
+async function fetchPage(idOrUrl){
+  const res = await mcp.callTool(SERVER, "notion-fetch", { id: idOrUrl }, { cache: { staleTime: 60000 } });
+  return { text: textOf(res), storedAt: res.cache && res.cache.storedAt };
+}
+async function loadBrief(item){
+  setStatus("Reading " + item.title + ".");
+  try {
+    const r = await fetchPage(item.url);
+    const b = parseBrief(contentOf(r.text));
+    if (!b.clients.length && !b.route.length && !b.summary) { setStatus("That page has no brief sections yet.", true); return; }
+    renderBrief(b); setStatus("");
+    $("src-line").textContent = "Source: " + item.title + (r.storedAt ? " · read " + new Date(r.storedAt).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) : "");
+  } catch (e) { setStatus(explain(e), true); }
+}
+async function loadAll(){
+  const sel = $("source"); sel.disabled = true;
+  if (!mcp) { setStatus("Open this page inside Claude to load the brief. Phrases, voice and mission log work without it.", true); return; }
+  setStatus("Reading the latest brief from Notion.");
+  try {
+    const r = await fetchPage(PARENT_ID);
+    briefs = listBriefs(r.text);
+    sel.textContent = "";
+    if (!briefs.length) { setStatus("No daily briefs found under Brief Diario de Trabajo yet.", true); return; }
+    briefs.forEach((b, i) => { const o = document.createElement("option"); o.value = String(i); o.textContent = b.title; sel.appendChild(o); });
+    const first = Math.max(0, briefs.findIndex(b => !b.test));
+    sel.value = String(first); sel.disabled = false;
+    await loadBrief(briefs[first]);
+  } catch (e) { setStatus(explain(e), true); }
+}
+$("source").onchange = e => loadBrief(briefs[Number(e.target.value)]);
+$("refresh").onclick = async () => {
+  try { if (mcp && mcp.invalidate) await mcp.invalidate(SERVER, "notion-fetch"); } catch {}
+  loadAll();
+};
+(async () => {
+  try { mcp = window.claude && await window.claude.use("mcp"); } catch { mcp = null; }
+  loadAll();
+})();
+</script>
