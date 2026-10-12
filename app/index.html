@@ -79,6 +79,8 @@ a{color:var(--cobalt)}
 .orders{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
 .orders .txt{flex:1 1 320px;min-width:0}
 .orders p{font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,2.6vw,2.2rem);line-height:1.2;margin:8px 0 6px;color:var(--parch);text-wrap:balance}
+.orders .line{display:block;font-family:var(--display);color:var(--gold-hi);font-size:clamp(1rem,1.6vw,1.25rem);letter-spacing:.06em;margin-top:12px}
+.orders p.long{font-size:clamp(1.05rem,1.9vw,1.55rem);line-height:1.35}
 .hear{display:flex;flex-direction:column;gap:8px;align-items:stretch;flex:0 0 auto}
 .hear .go{background:rgba(11,42,111,.6);padding:14px 20px;text-align:center}
 .hear .go b{display:block;font-family:var(--display);font-size:1rem;letter-spacing:.14em}
@@ -169,7 +171,8 @@ a{color:var(--cobalt)}
     <section class="orders panel" aria-labelledby="orders-h">
       <div class="txt">
         <h2 class="t" id="orders-h">Today's Orders</h2>
-        <p id="opening"></p>
+        <span class="line" id="open-line"></span>
+        <p id="order"></p>
         <span class="note" id="open-meta"></span>
       </div>
       <div class="hear">
@@ -252,20 +255,24 @@ function el(tag, cls, text){ const e = document.createElement(tag); if (cls) e.c
 /* ---------- phrases ---------- */
 const dayKey = new Date().toISOString().slice(0, 10);
 const dayNum = Math.floor(new Date(dayKey).getTime() / 86400000);
-let openOffset = 0, openTheme = "morning";
+let openOffset = 0, orderOffset = 0, openTheme = "morning";
+const ORDERS = PHRASES.filter(p => p.kind === "closing");
 function pickOpening(){
   const pool = PHRASES.filter(p => p.kind === "opening" && p.theme === openTheme);
   return pool[(dayNum + openOffset) % pool.length];
 }
+function pickOrder(){ return ORDERS[(dayNum * 7 + orderOffset) % ORDERS.length]; }
 const THEME_LABEL = { morning: "Day start", afternoon: "Heavy afternoon", meetings: "Council day" };
 function renderPhrase(){
-  $("opening").textContent = pickOpening().text;
+  const o = pickOrder().text.replace(/\n/g, " ");
+  $("open-line").textContent = pickOpening().text;
+  const p = $("order"); p.textContent = o; p.classList.toggle("long", o.length > 140);
   $("open-meta").textContent = THEME_LABEL[openTheme] || "";
 }
 $("today").textContent = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 openTheme = new Date().getHours() < 12 ? "morning" : "afternoon";
 renderPhrase();
-$("another-open").onclick = () => { openOffset++; stopSpeak(); renderPhrase(); };
+$("another-open").onclick = () => { openOffset++; orderOffset++; stopSpeak(); renderPhrase(); };
 
 /* ---------- voice (speaks today's order) ---------- */
 const synth = window.speechSynthesis;
@@ -289,7 +296,7 @@ function stopSpeak(){ if (synth) synth.cancel(); $("speaking").classList.remove(
 $("speak").onclick = () => {
   if (!synth) return;
   if (synth.speaking) { stopSpeak(); return; }
-  const u = new SpeechSynthesisUtterance($("opening").textContent);
+  const u = new SpeechSynthesisUtterance($("open-line").textContent + " " + $("order").textContent);
   const v = voices.find(x => x.name === $("voice").value);
   if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "en-US";
   u.rate = Number($("rate").value); u.pitch = 0.65;
