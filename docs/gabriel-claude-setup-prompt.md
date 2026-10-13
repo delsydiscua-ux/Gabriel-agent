@@ -34,6 +34,6 @@ Step 4. Calendars. I have two Outlook calendars from clients and one Google cale
 
 Step 5. The page. Tell me how to: (a) open the page link, (b) pin it in my Claude sidebar, (c) add the link to my phone home screen, (d) allow Notion and Claude access when the page asks.
 
-Step 6. Morning delivery. Explain, without creating anything yet, the options for getting the page in front of me each morning: just the pinned link, a scheduled task in the Claude desktop app, or a daily email to myself. Say what each one needs and its limits (for example, a scheduled task needs the computer on). Ask which I prefer.
+Step 6. Daily scheduled task. Help me set up my brief as a scheduled task that runs every day at a time I choose (suggest 7:00 am). Each run should: read the latest daily brief under the Notion page above and give me today's top 3 priorities and any blockers in about five lines; add today's meetings from my calendars if they are connected; add the 5 emails that most need attention if Gmail is connected (read only); and end with the Battle Brief link. Before you create the task, show me the exact task text and the schedule and wait for my yes. Tell me any limit (for example, it needs my computer on and the Claude app open) and offer the pinned link as a fallback.
 
 Step 7. Report. Give me a short checklist of what is working, what is missing and the exact connector names you see, so I can send it to Delsy.
